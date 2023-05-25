@@ -42,8 +42,6 @@ export const loadSearchResults = async function (query) {
         image: rec.image_url,
       };
     });
-
-    console.log(state.search.results);
   } catch (error) {
     throw error;
   }
