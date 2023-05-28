@@ -21,7 +21,6 @@ export default class View {
     const newMarkup = this._generateMarkup();
 
     const newDOM = document.createRange().createContextualFragment(newMarkup);
-
     const newElements = Array.from(newDOM.querySelectorAll('*'));
     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
 
@@ -31,8 +30,9 @@ export default class View {
       if (
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild?.nodeValue.trim() !== ''
-      )
+      ) {
         curEl.textContent = newEl.textContent;
+      }
 
       if (!newEl.isEqualNode(curEl))
         Array.from(newEl.attributes).forEach(attr =>
@@ -47,11 +47,11 @@ export default class View {
 
   renderSpinner() {
     const markup = `
-    <div class="spinner">
+      <div class="spinner">
         <svg>
           <use href="${icons}#icon-loader"></use>
         </svg>
-      </div>    
+      </div>
     `;
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
@@ -59,14 +59,15 @@ export default class View {
 
   renderError(message = this._errorMessage) {
     const markup = `
-    <div class="error">
-      <div>
-      <svg>
-      <use href="${icons}#icon-alert-triangle"></use>
-      </svg>
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icons}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
       </div>
-      <p>${message}</p>
-      </div>`;
+    `;
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
@@ -74,13 +75,14 @@ export default class View {
   renderMessage(message = this._message) {
     const markup = `
       <div class="message">
-      <div>
-      <svg>
-      <use href="${icons}#icon-smile"></use>
-      </svg>
+        <div>
+          <svg>
+            <use href="${icons}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
       </div>
-      <p>${message}</p>
-      </div>`;
+    `;
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
